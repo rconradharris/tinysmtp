@@ -5,17 +5,30 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate, make_msgid
 
+import envparse
+
+
+env = envparse.Env(
+    TINYSMTP_SERVER=str,
+    TINYSMTP_PORT=(int, 25),
+    TINYSMTP_USERNAME=str,
+    TINYSMTP_PASSWORD=str,
+    TINYSMTP_SSL=(bool, False),
+    TINYSMTP_TLS=(bool, False),
+    TINYSMTP_DEBUG=(bool, False)
+)
+
 
 class Connection(object):
-    def __init__(self, hostname, port=25, username=None, password=None,
+    def __init__(self, hostname=None, port=None, username=None, password=None,
                  ssl=False, tls=False, debug=False):
-        self.hostname = hostname
-        self.port = port
-        self.username = username
-        self.password = password
-        self.ssl = ssl
-        self.tls = tls
-        self.debug = debug
+        self.hostname = hostname or env('TINYSMTP_SERVER')
+        self.port = env('TINYSMTP_PORT', default=25)
+        self.username = username or env('TINYSMTP_USERNAME')
+        self.password = password or env('TINYSMTP_PASSWORD')
+        self.ssl = ssl or env('TINYSMTP_SSL')
+        self.tls = tls or env('TINYSMTP_TLS')
+        self.debug = debug or env('TINYSMTP_DEBUG')
 
     def connect(self):
         SMTP = smtplib.SMTP_SSL if self.ssl else smtplib.SMTP

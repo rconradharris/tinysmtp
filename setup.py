@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='tinysmtp',
-    version='0.1.1',
+    version='0.1.2',
     url='https://github.com/rconradharris/tinysmtp',
     license='BSD',
     author='Rick Harris',
@@ -14,7 +14,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    install_requires=[''],
+    install_requires=['envparse'],
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
