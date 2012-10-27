@@ -23,7 +23,7 @@ class Connection(object):
         self.connection.set_debuglevel(self.debug)
         if self.tls:
             self.connection.starttls()
-        self.connection.login(SMTP_LOGIN, SMTP_PASSWORD)
+        self.connection.login(self.username, self.password)
 
     def send(self, msg):
         self.connection.sendmail(msg.sender, msg.send_to, msg.as_string())
